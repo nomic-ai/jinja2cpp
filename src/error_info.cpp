@@ -102,7 +102,7 @@ struct formatter<jinja2::Value, CharT>
     }
 
     template<typename FormatContext>
-    auto format(const jinja2::Value& val, FormatContext& ctx)
+    auto format(const jinja2::Value& val, FormatContext& ctx) const
     {
         nonstd::visit(ValueRenderer<FormatContext>(&ctx), val.data());
         return fmt::format_to(ctx.out(), UNIVERSAL_STR("").GetValue<CharT>());
