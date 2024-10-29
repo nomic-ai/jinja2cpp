@@ -9,6 +9,7 @@
 #include <boost/optional.hpp>
 #include <fmt/format.h>
 #include <fmt/xchar.h>
+#include <nonstd/expected.hpp>
 
 #include <iostream>
 #include <cmath>

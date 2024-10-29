@@ -227,6 +227,7 @@ target_compile_definitions(${LIB_TARGET_NAME}
     PUBLIC
         -DBOOST_SYSTEM_NO_DEPRECATED
         -DBOOST_ERROR_CODE_HEADER_ONLY
+        -Dnsel_CONFIG_SELECT_EXPECTED=nsel_EXPECTED_NONSTD  # C++23 std::expected is not 100% compatible
         ${_regex_define}
         ${_bindings_define}
 )
