@@ -28,13 +28,15 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(string-view-lite)
 
-set (FMT_INSTALL ON CACHE BOOL "" FORCE)
-FetchContent_Declare(
-    fmt
-    URL https://github.com/fmtlib/fmt/archive/refs/tags/10.2.1.tar.gz
-    URL_HASH SHA256=1250e4cc58bf06ee631567523f48848dc4596133e163f02615c97f78bab6c811
-)
-FetchContent_MakeAvailable(fmt)
+if (NOT TARGET fmt::fmt)
+    set (FMT_INSTALL ON CACHE BOOL "" FORCE)
+    FetchContent_Declare(
+        fmt
+        URL https://github.com/fmtlib/fmt/archive/refs/tags/10.2.1.tar.gz
+        URL_HASH SHA256=1250e4cc58bf06ee631567523f48848dc4596133e163f02615c97f78bab6c811
+    )
+    FetchContent_MakeAvailable(fmt)
+endif()
 
 set (RAPIDJSON_BUILD_DOC OFF CACHE BOOL "" FORCE)
 set (RAPIDJSON_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
