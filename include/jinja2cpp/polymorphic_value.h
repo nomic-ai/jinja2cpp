@@ -39,9 +39,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef nonstd_lite_HAVE_IN_PLACE_TYPES
 #define nonstd_lite_HAVE_IN_PLACE_TYPES  1
 
+#ifndef   polymorphic_CPLUSPLUS
+# if defined(_MSVC_LANG ) && !defined(__clang__)
+#  define polymorphic_CPLUSPLUS  (_MSC_VER == 1900 ? 201103L : _MSVC_LANG )
+# else
+#  define polymorphic_CPLUSPLUS  __cplusplus
+# endif
+#endif
+#define polymorphic_CPP17_OR_GREATER  ( polymorphic_CPLUSPLUS >= 201703L )
+
 // C++17 std::in_place in <utility>:
 
-#if variant_CPP17_OR_GREATER
+#if polymorphic_CPP17_OR_GREATER
 
 #include <utility>
 
@@ -64,7 +73,7 @@ using std::in_place_index_t;
 
 } // namespace nonstd
 
-#else // variant_CPP17_OR_GREATER
+#else // polymorphic_CPP17_OR_GREATER
 
 #include <cstddef>
 
@@ -117,7 +126,7 @@ inline in_place_t in_place_index( detail::in_place_index_tag<K> = detail::in_pla
 
 } // namespace nonstd
 
-#endif // variant_CPP17_OR_GREATER
+#endif // polymorphic_CPP17_OR_GREATER
 #endif // nonstd_lite_HAVE_IN_PLACE_TYPES
 
 namespace isocpp_p0201 {
