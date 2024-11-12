@@ -12,7 +12,7 @@ INSTANTIATE_TEST_SUITE_P(ToJson,
                         ::testing::Values(InputOutputPair{ "(1, 2, 3) | tojson", "[1,2,3]" },
                                           InputOutputPair{ "(1, 2, 3) | tojson(indent = 1)", "[1, 2, 3]" },
                                           InputOutputPair{ "'\"ba&r\\'' | tojson", "\"\\\"ba\\u0026r\\u0027\"" },
-                                          InputOutputPair{ "'<bar>' | tojson", "\"\\u003cbar\\u003e\"" }));
+                                          InputOutputPair{ "'<bar>' | tojson", "\"<bar>\"" }));
 
 struct ToJson : ::testing::Test
 {

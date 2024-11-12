@@ -151,30 +151,7 @@ InternalValue Serialize::Filter(const InternalValue& value, RenderContext& conte
         const auto indent = ConvertToInt(this->GetArgumentValue("indent", context));
         DocumentWrapper jsonDoc;
         const auto jsonValue = jsonDoc.CreateValue(value);
-        const auto jsonString = jsonValue.AsString(static_cast<uint8_t>(indent));
-        const auto result = std::accumulate(jsonString.begin(), jsonString.end(), ""s, [](const auto &str, const auto &c)
-        {
-            switch (c)
-            {
-            case '<':
-                return str + "\\u003c";
-                break;
-            case '>':
-                return str +"\\u003e";
-                break;
-            case '&':
-                return str +"\\u0026";
-                break;
-            case '\'':
-                return str +"\\u0027";
-                break;
-            default:
-                return str + c;
-                break;
-            }
-        });
-
-        return result;
+        return jsonValue.AsString(static_cast<uint8_t>(indent));
     }
 
     return InternalValue();
