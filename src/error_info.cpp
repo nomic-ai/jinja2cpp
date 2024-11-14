@@ -121,7 +121,9 @@ void RenderErrorInfo(std::basic_string<CharT>& result, const ErrorInfoTpl<CharT>
 
     auto& loc = errInfo.GetErrorLocation();
 
-    fmt::format_to(std::back_inserter(out), UNIVERSAL_STR("{}:{}:{}: error: ").GetValue<CharT>(), ConvertString<string_t>(loc.fileName), loc.line, loc.col);
+    if (!loc.fileName.empty())
+        fmt::format_to(std::back_inserter(out), UNIVERSAL_STR("{}:").GetValue<CharT>(), ConvertString<string_t>(loc.fileName));
+    fmt::format_to(std::back_inserter(out), UNIVERSAL_STR("{}:{}: error: ").GetValue<CharT>(), loc.line, loc.col);
     ErrorCode errCode = errInfo.GetCode();
     switch (errCode)
     {
