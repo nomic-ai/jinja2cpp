@@ -45,6 +45,10 @@ set (RAPIDJSON_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set (RAPIDJSON_BUILD_THIRDPARTY_GTEST OFF CACHE BOOL "" FORCE)
 set (RAPIDJSON_ENABLE_INSTRUMENTATION_OPT OFF CACHE BOOL "" FORCE)
 
+function(install)
+    # Do nothing; disable install commands for RapidJSON
+endfunction()
+
 FetchContent_Declare(
     rapidjson
     #    GIT_TAG f9d53419e912910fd8fa57d5705fa41425428c35 - latest but broken revision
@@ -52,6 +56,8 @@ FetchContent_Declare(
     URL_HASH SHA256=d0c9e52823d493206eb721d38cb3a669ca0212360862bd15a3c2f7d35ea7c6f7
 )
 FetchContent_MakeAvailable(rapidjson)
+
+unset(install)
 
 find_package(RapidJSON REQUIRED
              PATHS "${rapidjson_BINARY_DIR}"
