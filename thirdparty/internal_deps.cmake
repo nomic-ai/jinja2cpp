@@ -77,12 +77,15 @@ if (JINJA2CPP_BUILD_TESTS)
     FetchContent_MakeAvailable(nlohmann_json)
 endif()
 
-install (FILES
-        thirdparty/nonstd/expected-lite/include/nonstd/expected.hpp
-        thirdparty/nonstd/variant-lite/include/nonstd/variant.hpp
-        thirdparty/nonstd/optional-lite/include/nonstd/optional.hpp
-        thirdparty/nonstd/string-view-lite/include/nonstd/string_view.hpp
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nonstd)
+
+if (NOT)
+    install (FILES
+            thirdparty/nonstd/expected-lite/include/nonstd/expected.hpp
+            thirdparty/nonstd/variant-lite/include/nonstd/variant.hpp
+            thirdparty/nonstd/optional-lite/include/nonstd/optional.hpp
+            thirdparty/nonstd/string-view-lite/include/nonstd/string_view.hpp
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nonstd)
+endif()
 
 install (TARGETS RapidJson
     EXPORT InstallTargets
