@@ -67,11 +67,7 @@ public:
     {
     public:
         using BaseClass = IndexedEnumeratorImpl<Enumerator, ThisType, Value, IListEnumerator>;
-#if defined(_MSC_VER)
-        using IndexedEnumeratorImpl::IndexedEnumeratorImpl;
-#else
         using BaseClass::BaseClass;
-#endif
 
         typename BaseClass::ValueType GetCurrent() const override
         {
@@ -140,11 +136,7 @@ public:
     {
     public:
         using BaseClass = IndexedEnumeratorImpl<Enumerator, ThisType, InternalValue, IListAccessorEnumerator>;
-#if defined(_MSC_VER)
-        using IndexedEnumeratorImpl::IndexedEnumeratorImpl;
-#else
         using BaseClass::BaseClass;
-#endif
 
         typename BaseClass::ValueType GetCurrent() const override
         {
