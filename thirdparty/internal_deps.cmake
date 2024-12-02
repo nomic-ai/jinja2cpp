@@ -88,8 +88,8 @@ if (JINJA2CPP_BUILD_TESTS)
 endif()
 
 install (FILES
-        thirdparty/nonstd/expected-lite/include/nonstd/expected.hpp
-        thirdparty/nonstd/variant-lite/include/nonstd/variant.hpp
-        thirdparty/nonstd/optional-lite/include/nonstd/optional.hpp
-        thirdparty/nonstd/string-view-lite/include/nonstd/string_view.hpp
+        ${expected_lite_SOURCE_DIR}/include/nonstd/expected.hpp
+        ${variant_lite_SOURCE_DIR}/include/nonstd/variant.hpp
+        ${optional_lite_SOURCE_DIR}/include/nonstd/optional.hpp
+        ${string_view_lite_SOURCE_DIR}/include/nonstd/string_view.hpp
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nonstd)
