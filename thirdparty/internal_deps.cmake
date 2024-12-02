@@ -45,24 +45,34 @@ set (RAPIDJSON_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set (RAPIDJSON_BUILD_THIRDPARTY_GTEST OFF CACHE BOOL "" FORCE)
 set (RAPIDJSON_ENABLE_INSTRUMENTATION_OPT OFF CACHE BOOL "" FORCE)
 
-FetchContent_Declare(
-    rapidjson
-    #    GIT_TAG f9d53419e912910fd8fa57d5705fa41425428c35 - latest but broken revision
-    URL https://github.com/Tencent/rapidjson/archive/973dc9c06dcd3d035ebd039cfb9ea457721ec213.tar.gz
-    URL_HASH SHA256=d0c9e52823d493206eb721d38cb3a669ca0212360862bd15a3c2f7d35ea7c6f7
-)
-FetchContent_MakeAvailable(rapidjson)
+if (NOT TARGET RapidJSON::RapidJSON)
+    FetchContent_Declare(
+        rapidjson
+        #    GIT_TAG f9d53419e912910fd8fa57d5705fa41425428c35 - latest but broken revision
+        URL https://github.com/Tencent/rapidjson/archive/973dc9c06dcd3d035ebd039cfb9ea457721ec213.tar.gz
+        URL_HASH SHA256=d0c9e52823d493206eb721d38cb3a669ca0212360862bd15a3c2f7d35ea7c6f7
+    )
+    FetchContent_MakeAvailable(rapidjson)
 
-find_package(RapidJSON REQUIRED
-             PATHS "${rapidjson_BINARY_DIR}"
-             NO_DEFAULT_PATH)
+    find_package(RapidJSON REQUIRED
+                 PATHS "${rapidjson_BINARY_DIR}"
+                 NO_DEFAULT_PATH)
 
-add_library(RapidJson INTERFACE)
-target_include_directories(RapidJson
-    INTERFACE
-        $<BUILD_INTERFACE:${RapidJSON_INCLUDE_DIR}>
-        $<INSTALL_INTERFACE:include>
-)
+    add_library(RapidJSON INTERFACE)
+    add_library(RapidJSON::RapidJSON ALIAS RapidJSON)
+    target_include_directories(RapidJSON
+        INTERFACE
+            $<BUILD_INTERFACE:${RapidJSON_INCLUDE_DIR}>
+            $<INSTALL_INTERFACE:include>
+    )
+
+    install (TARGETS RapidJSON
+        EXPORT InstallTargets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
+    )
+endif()
 
 if (JINJA2CPP_BUILD_TESTS)
     set (JSON_BuildTests OFF CACHE BOOL "" FORCE)
@@ -83,10 +93,3 @@ install (FILES
         thirdparty/nonstd/optional-lite/include/nonstd/optional.hpp
         thirdparty/nonstd/string-view-lite/include/nonstd/string_view.hpp
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nonstd)
-
-install (TARGETS RapidJson
-    EXPORT InstallTargets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
-)

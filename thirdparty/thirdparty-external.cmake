@@ -41,8 +41,9 @@ find_hdr_package(string-view-lite nonstd/string_view.hpp)
 find_hdr_package(fmt-header-only fmt/format.h)
 
 find_package(RapidJSON)
-add_library(RapidJson INTERFACE)
-target_include_directories(RapidJson
+add_library(RapidJSON INTERFACE)
+add_library(RapidJSON::RapidJSON ALIAS RapidJSON)
+target_include_directories(RapidJSON
     INTERFACE
         $<BUILD_INTERFACE:${RapidJSON_INCLUDE_DIR}>
         $<INSTALL_INTERFACE:include>
@@ -69,7 +70,7 @@ if(JINJA2CPP_INSTALL)
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/static
             )
 
-    install(TARGETS RapidJson
+    install(TARGETS RapidJSON
             EXPORT InstallTargets
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
