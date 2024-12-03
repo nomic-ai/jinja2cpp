@@ -24,8 +24,8 @@ FetchContent_MakeAvailable(optional-lite)
 
 FetchContent_Declare(
     string-view-lite
-    URL https://github.com/martinmoene/string-view-lite/archive/6e5e519d69b4ea99c3095d85d8e1e3ff4d54bbaa.tar.gz
-    URL_HASH SHA256=fdcb41a43543f5970c617b4dd224b4c958316707cd61090f18e579072eb15b0e
+    URL https://github.com/martinmoene/string-view-lite/archive/a47222b9855dd6e6d1eac38acaa495822e2caa69.tar.gz
+    URL_HASH SHA256=cdc7de644d9a67780552890b7ff0fdd9bf9dc16da97b2578410578f94272b0ea
 )
 FetchContent_MakeAvailable(string-view-lite)
 
