@@ -109,6 +109,7 @@ struct ParserTraits<char> : public ParserTraitsBase<>
         else
         {
             char* endBuff = nullptr;
+            errno = 0;
             int64_t val = strtoll(buff, &endBuff, 10);
             if ((errno == ERANGE) || *endBuff)
             {
