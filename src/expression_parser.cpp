@@ -85,7 +85,7 @@ ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionPars
 
 ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionParser::ParseLogicalAnd(LexScanner& lexer)
 {
-    auto left = ParseLogicalCompare(lexer);
+    auto left = ParseLogicalNot(lexer);
 
     if (left && lexer.EatIfEqual(Keyword::LogicalAnd))
     {
@@ -97,6 +97,26 @@ ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionPars
     }
 
     return left;
+}
+
+ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionParser::ParseLogicalNot(LexScanner& lexer)
+{
+    const auto tok = lexer.NextToken();
+    const auto isUnary = lexer.GetAsKeyword(tok) == Keyword::LogicalNot;
+    if (!isUnary)
+        lexer.ReturnToken();
+
+    auto subExpr = ParseLogicalCompare(lexer);
+    if (!subExpr)
+        return subExpr;
+
+    ExpressionEvaluatorPtr<Expression> result;
+    if (isUnary)
+        result = std::make_shared<UnaryExpression>(UnaryExpression::LogicalNot, *subExpr);
+    else
+        result = subExpr.value();
+
+    return result;
 }
 
 ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionParser::ParseLogicalCompare(LexScanner& lexer)
@@ -259,7 +279,7 @@ ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionPars
 ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionParser::ParseUnaryPlusMinus(LexScanner& lexer)
 {
     const auto tok = lexer.NextToken();
-    const auto isUnary = tok == '+' || tok == '-' || lexer.GetAsKeyword(tok) == Keyword::LogicalNot;
+    const auto isUnary = tok == '+' || tok == '-';
     if (!isUnary)
         lexer.ReturnToken();
   
@@ -269,7 +289,7 @@ ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionPars
 
     ExpressionEvaluatorPtr<Expression> result;
     if (isUnary)
-        result = std::make_shared<UnaryExpression>(tok == '+' ? UnaryExpression::UnaryPlus : (tok == '-' ? UnaryExpression::UnaryMinus : UnaryExpression::LogicalNot), *subExpr);
+        result = std::make_shared<UnaryExpression>(tok == '+' ? UnaryExpression::UnaryPlus : UnaryExpression::UnaryMinus, *subExpr);
     else
         result = subExpr.value();
 
