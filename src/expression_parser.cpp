@@ -327,7 +327,11 @@ ExpressionParser::ParseResult<ExpressionEvaluatorPtr<Expression>> ExpressionPars
     {
         tok = lexer.PeekNextToken();
         if (tok == '[' || tok == '.')
+        {
             valueRef = ParseSubscript(lexer, *valueRef);
+            if (!valueRef)
+                return valueRef.get_unexpected();
+        }
 
         if (lexer.EatIfEqual('('))
             valueRef = ParseCall(lexer, *valueRef);
