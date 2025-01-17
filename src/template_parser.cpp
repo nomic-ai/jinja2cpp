@@ -245,6 +245,10 @@ StatementsParser::ParseResult StatementsParser::ParseIf(LexScanner &lexer, State
 StatementsParser::ParseResult StatementsParser::ParseElse(LexScanner& /*lexer*/, StatementInfoList& statementsInfo
                                                           , const Token& stmtTok)
 {
+    auto& info = statementsInfo.back();
+    if (info.type != StatementInfo::IfStatement && info.type != StatementInfo::ElseIfStatement)
+        return MakeParseError(ErrorCode::UnexpectedStatement, stmtTok);
+
     auto renderer = std::make_shared<ElseBranchStatement>(ExpressionEvaluatorPtr<>());
     StatementInfo statementInfo = StatementInfo::Create(StatementInfo::ElseIfStatement, stmtTok);
     statementInfo.renderer = std::static_pointer_cast<IRendererBase>(renderer);
@@ -255,6 +259,10 @@ StatementsParser::ParseResult StatementsParser::ParseElse(LexScanner& /*lexer*/,
 StatementsParser::ParseResult StatementsParser::ParseElIf(LexScanner& lexer, StatementInfoList& statementsInfo
                                                           , const Token& stmtTok)
 {
+    auto& info = statementsInfo.back();
+    if (info.type != StatementInfo::IfStatement && info.type != StatementInfo::ElseIfStatement)
+        return MakeParseError(ErrorCode::UnexpectedStatement, stmtTok);
+
     auto pivotTok = lexer.PeekNextToken();
     ExpressionParser exprParser(m_settings);
     auto valueExpr = exprParser.ParseFullExpression(lexer);
