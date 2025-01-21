@@ -39,9 +39,6 @@ private:
     ParseResult<ExpressionEvaluatorPtr<Expression>> ParseCall(LexScanner& lexer, ExpressionEvaluatorPtr<Expression> valueRef);
     ParseResult<ExpressionEvaluatorPtr<Expression>> ParseSubscript(LexScanner& lexer, ExpressionEvaluatorPtr<Expression> valueRef);
     ParseResult<ExpressionEvaluatorPtr<IfExpression>> ParseIfExpression(LexScanner& lexer);
-
-private:
-    ComposedRenderer* m_topLevelRenderer = nullptr;
 };
 
 } // namespace jinja2
